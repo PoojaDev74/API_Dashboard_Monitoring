@@ -6,14 +6,21 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Configuration() {
   const [apis, setApis] = useState([]);
-  const [selectedApi, setSelectedApi] = useState(null); // track which API is selected for controls
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/controls`)
-      .then((res) => setApis(res.data))
+      .get(`${API_URL}/controls`, {
+        headers: { "x-api-key": import.meta.env.VITE_API_KEY },
+       })
+      .then((res) => setApis(res.data || []))
       .catch((err) => console.error("Error fetching APIs:", err));
   }, []);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A"; // if null or undefined
+    const d = new Date(dateString);
+    return isNaN(d.getTime()) ? "Invalid Date" : d.toISOString().split("T")[0];
+  };
 
   // Handle toggle
   const handleToggle = (api) => {
