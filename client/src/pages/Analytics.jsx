@@ -20,7 +20,7 @@ export default function Analytics() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/stats/analytics`, {
+      .get(`${API_URL}/api/stats/analytics`, {
           headers: { "x-api-key": import.meta.env.VITE_API_KEY }
       })
       .then((res) => setStats(res.data))
@@ -157,7 +157,7 @@ export default function Analytics() {
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" /> {/* ✅ Now shows Jan, Feb, Mar */}
+          <XAxis dataKey="date" />
           <YAxis domain={[90, 100]} />
           <Tooltip />
           <Line
