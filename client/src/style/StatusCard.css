@@ -30,6 +30,10 @@
   border-radius: 18px;
 }
 
+.downtime {
+  border-bottom: 2px dashed red;
+}
+
 .status-icon {
   position: absolute;
   top: 0;
