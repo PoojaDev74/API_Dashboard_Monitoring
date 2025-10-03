@@ -10,7 +10,7 @@ import uptimeRoutes from "./routes/uptimeRoutes.js";
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:5174", "http://localhost:5175", "http://localhost:5176"],
+  origin: ["http://localhost:5174", "http://localhost:5175", "http://localhost:5176", https://apidashboardmanagement.netlify.app/],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
