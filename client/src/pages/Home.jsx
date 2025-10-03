@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import StatusCard from "../components/StatusCard";
 import "../style/StatusCard.css";
-import { client } from "../api/client.js";   // ✅ import axios instance
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Home() {
   const [statusData, setStatusData] = useState([]);
@@ -17,11 +18,11 @@ export default function Home() {
   const loadData = async (pageNum) => {
     setLoading(true);
     try {
-      const res = await client.get(`/status`, {
+      const res = await fetch( `${API_URL}/api/logs/time?year=${year}&month=${month}`, {
         params: { page: pageNum, year }, 
         headers: { "x-api-key": import.meta.env.VITE_API_KEY }  
       });
-      setStatusData(res.data.data || []);   // ✅ safer handling
+      setStatusData(res.data.data || []);  
     } catch (err) {
       console.error("❌ Error fetching status data:", err);
       setStatusData([]);
@@ -48,6 +49,15 @@ export default function Home() {
     setPage(parseInt(selectedMonth, 10));
   };
 
+  const getStatusIcon = (status) => {
+    if (status === 200 ) {
+      return "✔️";
+    } else if (status >= 200 && status < 600) {
+      return "❌";
+    }
+    return "";
+   };
+  
   return (
     <div>
       <h2>Home</h2>
