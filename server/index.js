@@ -37,11 +37,11 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-app.use("/api/tracer", logRoutes);
-app.use("/api/controls", controlRoutes);
-app.use("/api/status", statusRoutes);
-app.use("/api/uptime", uptimeRoutes);
-app.use("/api/stats", statsRoutes);
+app.use("/tracer", logRoutes);
+app.use("/controls", controlRoutes);
+app.use("/status", statusRoutes);
+app.use("/uptime", uptimeRoutes);
+app.use("/stats", statsRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Backend running on port ${PORT}`));
