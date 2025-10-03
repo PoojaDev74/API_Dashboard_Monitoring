@@ -18,6 +18,10 @@ app.use(cors({
 app.use(express.json());
 connectDB();
 
+app.get("/", (req, res) => {
+  res.send("hello");
+});
+
 // Routes
 app.use("/api/tracer", logRoutes);
 app.use("/api/controls", controlRoutes);
