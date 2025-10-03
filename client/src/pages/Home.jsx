@@ -18,8 +18,8 @@ export default function Home() {
   const loadData = async (pageNum) => {
     setLoading(true);
     try {
-      const res = await fetch( `${API_URL}/api/logs/time?year=${year}&month=${month}`, {
-        params: { page: pageNum, year }, 
+      const res = await fetch( 
+       `${API_URL}/api/logs/time?year=${year}&month=${month}`, {
         headers: { "x-api-key": import.meta.env.VITE_API_KEY }  
       });
       setStatusData(res.data.data || []);  
@@ -83,9 +83,15 @@ export default function Home() {
 
       {loading && <p>Loading...</p>}
       {statusData.length === 0 && !loading && <p>No data found</p>}
-      {statusData.map((log) => (
-        <StatusCard key={log.traceId} log={log} />
-      ))}
-    </div>
-  );
-}
+        {statusData.map((api, idx) => (
+        <div key={idx} className="api-row">
+          <span className="api-name">{idx + 1}. {api.apiName}</span>
+          <div className="days-grid">
+            {api.statuses.map((s, i) => (
+              <StatusCard key={i} status={s} />
+            ))}
+          </div>
+         </div> 
+        ))}
+      );
+   }
