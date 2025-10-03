@@ -6,6 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Configuration() {
   const [apis, setApis] = useState([]);
+  const [selectedApi, setSelectedApi] = useState(null);
 
   useEffect(() => {
     axios
@@ -25,14 +26,14 @@ export default function Configuration() {
   // Handle toggle
   const handleToggle = (api) => {
     if (selectedApi && selectedApi.apiName === api.apiName) {
-      setSelectedApi(null); // close if same API clicked
+      setSelectedApi(null);
     } else {
-      setSelectedApi(api); // open for new API
+      setSelectedApi(api);
     }
   };
 
   return (
-    <div className="main-content">
+       <div className="main-content">
       <h2>API List</h2>
       <table className="api-table">
         <thead>
@@ -43,24 +44,30 @@ export default function Configuration() {
           </tr>
         </thead>
         <tbody>
-          {apis.map((api, idx) => (
-            <tr key={idx}>
-              <td>{api.apiName}</td>
-              <td>{new Date(api.startDate).toISOString().split("T")[0]}</td>
-              <td>
-                <button
-                  className="dots-btn"
-                  onClick={() => handleToggle(api)}
-                >
-                  ⋮
-                </button>
-              </td>
+          {apis.length > 0 ? (
+            apis.map((api, idx) => (
+              <tr key={idx}>
+                <td>{api.apiName}</td>
+                <td>{formatDate(api.startDate)}</td>
+                <td>
+                  <button
+                    className="dots-btn"
+                    onClick={() => handleToggle(api)}
+                  >
+                    ⋮
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="3">No APIs found</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
-      {/* Show Controls Panel if API is selected */}
+      // Show Controls Panel if API is selected 
       {selectedApi && (
         <div className="controls-card">
           <h3>Controls for {selectedApi.apiName}</h3>
