@@ -12,7 +12,7 @@ function StatusCard({ log }) {
 
   return (
     <div className="status-card">
-        <div className={getStatus(log.status)}></div>
+        <div className={`status-box ${getStatus(status)}`}></div>
     </div>
   );
 }
