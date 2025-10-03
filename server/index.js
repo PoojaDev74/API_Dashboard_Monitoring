@@ -9,13 +9,25 @@ import uptimeRoutes from "./routes/uptimeRoutes.js";
 
 const app = express();
 
-app.use(cors({
-  origin: ["http://localhost:5174", "http://localhost:5175", "http://localhost:5176", https://apidashboardmanagement.netlify.app/],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+const allowedOrigins = [
+  "https://apidashboardmanagement.netlify.app",
+  "http://localhost:5000"
+];
 
-app.options("*", cors());
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  allowedHeaders: ["Content-Type", "x-api-key"],
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 connectDB();
