@@ -15,6 +15,8 @@ app.use(cors({
   credentials: true
 }));
 
+app.options("*", cors());
+
 app.use(express.json());
 connectDB();
 
@@ -27,8 +29,6 @@ app.use("/api/tracer", logRoutes);
 app.use("/api/controls", controlRoutes);
 app.use("/api/status", statusRoutes);
 app.use("/api/uptime", uptimeRoutes);
-
-console.log("📂 Mounting /api/stats routes...");
 app.use("/api/stats", statsRoutes);
 
 const PORT = process.env.PORT || 5000;
