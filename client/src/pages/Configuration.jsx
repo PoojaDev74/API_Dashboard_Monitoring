@@ -18,12 +18,11 @@ export default function Configuration() {
   }, []);
 
   const formatDate = (dateString) => {
-    if (!dateString) return "N/A"; // if null or undefined
+    if (!dateString) return "N/A"; 
     const d = new Date(dateString);
     return isNaN(d.getTime()) ? "Invalid Date" : d.toISOString().split("T")[0];
   };
 
-  // Handle toggle
   const handleToggle = (api) => {
     if (selectedApi && selectedApi.apiName === api.apiName) {
       setSelectedApi(null);
@@ -67,7 +66,6 @@ export default function Configuration() {
         </tbody>
       </table>
 
-      // Show Controls Panel if API is selected 
       {selectedApi && (
         <div className="controls-card">
           <h3>Controls for {selectedApi.apiName}</h3>
