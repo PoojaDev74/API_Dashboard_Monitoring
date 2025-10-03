@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Home() {
   const [statusData, setStatusData] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); // month
   const [year, setYear] = useState(2025);
   const [loading, setLoading] = useState(false);
 
@@ -18,11 +18,14 @@ export default function Home() {
   const loadData = async (pageNum) => {
     setLoading(true);
     try {
-      const res = await fetch( 
-       `${API_URL}/api/logs/time?year=${year}&month=${month}`, {
-        headers: { "x-api-key": import.meta.env.VITE_API_KEY }  
-      });
-      setStatusData(res.data.data || []);  
+      const res = await fetch(
+        `${API_URL}/status?page=${pageNum}&year=${year}`,
+        {
+          headers: { "x-api-key": import.meta.env.VITE_API_KEY }
+        }
+      );
+      const data = await res.json();
+      setStatusData(data.data || []);  
     } catch (err) {
       console.error("❌ Error fetching status data:", err);
       setStatusData([]);
@@ -49,27 +52,10 @@ export default function Home() {
     setPage(parseInt(selectedMonth, 10));
   };
 
-    useEffect(() => {
-    Object.keys(containerRefs.current).forEach((key) => {
-      const container = containerRefs.current[key];
-      if (container) {
-        container.scrollLeft = container.scrollWidth;
-      }
-    });
-  }, [logs]);
-
-  const getStatusIcon = (status) => {
-    if (status === 200 ) {
-      return "✔️";
-    } else if (status >= 200 && status < 600) {
-      return "❌";
-    }
-    return "";
-   };
-  
   return (
-    <div>
+    <div className="main-content">
       <h2>Home</h2>
+      
       <div className="month-selector">
         <button onClick={prevMonth} disabled={page === 1}>⬅</button>
         <span>{monthNames[page - 1]} {year}</span>
@@ -83,19 +69,33 @@ export default function Home() {
 
       {loading && <p>Loading...</p>}
       {statusData.length === 0 && !loading && <p>No data found</p>}
-        {statusData.map((api, idx) => (
-        <div key={idx} className="api-row">
-          <span className="api-name">{idx + 1}. {api.apiName}</span>
-          <div className="days-grid">
-            {api.statuses.map((s, i) => {
-              const isError = s >= 400;
-              const prevError = i > 0 && api.statuses[i - 1] >= 400;
-              const isDown = isError && prevError; 
 
-              return <StatusCard key={i} status={s} isDown={isDown} />;
-            })}
+      {statusData.map((api, idx) => {
+        const lastStatus = api.statuses[api.statuses.length - 1]?.statusCode;
+
+        return (
+          <div key={idx} className="api-row">
+            <span className="api-name">{idx + 1}. {api.apiName}</span>
+            <div className="days-grid">
+              {api.statuses.map((s, i) => {
+                const isError = s.statusCode >= 400;
+                const prevError = i > 0 && api.statuses[i - 1].statusCode >= 400;
+                const isDown = isError && prevError; 
+                return (
+                  <StatusCard
+                    key={i}
+                    status={s.statusCode}
+                    isDown={isDown}
+                  />
+                );
+              })}
+            </div>
+            <span className="status-indicator">
+              {lastStatus >= 200 && lastStatus < 300 ? "✔️" : "❌"}
+            </span>
           </div>
-         </div> 
-        ))}
-      );
-   }
+        );
+      })}
+    </div>
+  );
+}
