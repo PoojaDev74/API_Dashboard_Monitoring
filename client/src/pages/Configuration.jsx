@@ -10,7 +10,7 @@ export default function Configuration() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/control`)
+      .get(`${API_URL}/controls`)
       .then((res) => setApis(res.data))
       .catch((err) => console.error("Error fetching APIs:", err));
   }, []);
