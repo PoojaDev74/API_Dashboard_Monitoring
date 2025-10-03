@@ -49,6 +49,15 @@ export default function Home() {
     setPage(parseInt(selectedMonth, 10));
   };
 
+    useEffect(() => {
+    Object.keys(containerRefs.current).forEach((key) => {
+      const container = containerRefs.current[key];
+      if (container) {
+        container.scrollLeft = container.scrollWidth;
+      }
+    });
+  }, [logs]);
+
   const getStatusIcon = (status) => {
     if (status === 200 ) {
       return "✔️";
@@ -74,12 +83,8 @@ export default function Home() {
 
       {loading && <p>Loading...</p>}
       {statusData.length === 0 && !loading && <p>No data found</p>}
-      {statusData.map((api, idx) => (
-        <StatusCard
-          key={`${api.apiName}-${idx}`}
-          apiName={api.apiName}
-          statuses={api.statuses}
-        />
+      {statusData.map((log) => (
+        <StatusCard key={log.traceId} log={log} />
       ))}
     </div>
   );
