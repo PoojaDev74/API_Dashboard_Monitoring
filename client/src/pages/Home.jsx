@@ -87,9 +87,13 @@ export default function Home() {
         <div key={idx} className="api-row">
           <span className="api-name">{idx + 1}. {api.apiName}</span>
           <div className="days-grid">
-            {api.statuses.map((s, i) => (
-              <StatusCard key={i} status={s} />
-            ))}
+            {api.statuses.map((s, i) => {
+              const isError = s >= 400;
+              const prevError = i > 0 && api.statuses[i - 1] >= 400;
+              const isDown = isError && prevError; 
+
+              return <StatusCard key={i} status={s} isDown={isDown} />;
+            })}
           </div>
          </div> 
         ))}
