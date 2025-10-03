@@ -19,7 +19,7 @@ export default function Home() {
     setLoading(true);
     try {
       const res = await fetch(
-        `${API_URL}/status?page=${pageNum}&year=${year}`,
+        `${API_URL}/api/status?page=${pageNum}&year=${year}`,
         {
           headers: { "x-api-key": import.meta.env.VITE_API_KEY }
         }
