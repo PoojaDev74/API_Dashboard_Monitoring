@@ -10,7 +10,7 @@ export default function Configuration() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/controls`, {
+      .get(`${API_URL}/api/controls`, {
         headers: { "x-api-key": import.meta.env.VITE_API_KEY },
        })
       .then((res) => setApis(res.data || []))
