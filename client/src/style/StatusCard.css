@@ -1,0 +1,39 @@
+.status-card {
+  background: #101c40;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 10px;
+  color: white;
+}
+.status-blocks {
+  display: flex;
+  flex-wrap: wrap;
+}
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: 2px;
+}
+.green { background: green; }
+.red { background: red; }
+.orange { background: orange; }
+.yellow { background: yellow; }
+
+.month-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+  font-size: 1.2em;
+}
+.month-selector input[type="month"] {
+  background: #1c2541;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+}

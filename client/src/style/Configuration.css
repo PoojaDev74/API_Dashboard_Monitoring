@@ -1,0 +1,60 @@
+.api-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.api-table th,
+.api-table td {
+  padding: 12px;
+  border-bottom: 1px solid #333;
+  color: white;
+  text-align: left;
+}
+
+.api-table th {
+  background: #4a6cf7;
+  color: white;
+}
+
+.dots-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+.controls-card {
+  position: absolute;
+  top: 120px;
+  right: 40px;
+  width: 280px;
+  background: #101528;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.controls-card h3 {
+  margin-bottom: 15px;
+  color: white;
+}
+
+.control-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 10px;
+  background: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

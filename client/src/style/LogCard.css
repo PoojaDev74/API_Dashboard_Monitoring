@@ -1,0 +1,36 @@
+
+
+.main-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logs-section {
+  margin-top: 20px;
+}
+
+.logs-section h3 {
+  color: #9ab3f5;
+  margin-bottom: 10px;
+}
+
+.log-card {
+  background: #1c2541;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.4);
+}
+
+.log-card p {
+  margin: 4px 0;
+}
+
+.log-card .status-200 { color: #4caf50; }
+.log-card .status-404 { color: #ff9800; }
+.log-card .status-500 { color: #f44336; }
