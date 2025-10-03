@@ -34,6 +34,24 @@
   border-bottom: 2px dashed red;
 }
 
+.api-row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.api-name {
+  width: 120px; 
+  font-weight: bold;
+  color: #fff;
+}
+
+.days-grid {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
 .status-icon {
   position: absolute;
   top: 0;
