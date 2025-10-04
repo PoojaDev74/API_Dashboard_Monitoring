@@ -1,5 +1,6 @@
-const connectDB = require("./config/db");
-const Control = require("./models/controlModel");
+// seed.js
+import connectDB from "./config/db.js";
+import Control from "./models/controlModel.js";
 
 const seedData = [
   { apiName: "/api/social", startDate: new Date("2024-01-01"), enabled: true },
@@ -12,12 +13,19 @@ const seedData = [
 const seedDB = async () => {
   await connectDB();
   try {
-    await Control.deleteMany({});
-    await Control.insertMany(seedData);
-    console.log("✅ API controls seeded");
+    for (const api of seedData) {
+      const exists = await Control.findOne({ apiName: api.apiName });
+      if (!exists) {
+        await Control.create(api);
+        console.log(`Added new control: ${api.apiName}`);
+      } else {
+        console.log(`Skipped (already exists): ${api.apiName}`);
+      }
+    }
+    console.log("Control seeding complete!");
     process.exit();
   } catch (error) {
-    console.error(error);
+    console.error("Error seeding controls:", error);
     process.exit(1);
   }
 };
