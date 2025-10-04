@@ -7,9 +7,6 @@ import statusRoutes from "./routes/statusRoutes.js";
 import statsRoutes from "./routes/statsRoutes.js";
 import uptimeRoutes from "./routes/uptimeRoutes.js";
 
-dotenv.config();
-connectDB();
-
 const app = express();
 
 const allowedOrigins = [
@@ -37,8 +34,8 @@ app.use(
 
 app.options("*", cors());
 
-// Middleware
 app.use(express.json());
+connectDB();
 
 // Routes
 app.use("/api/tracer", logRoutes);
