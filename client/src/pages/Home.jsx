@@ -27,7 +27,7 @@ export default function Home() {
       const data = await res.json();
       setStatusData(data.data || []);  
     } catch (err) {
-      console.error("❌ Error fetching status data:", err);
+      console.error("Error fetching status data:", err);
       setStatusData([]);
     } finally {
       setLoading(false);
