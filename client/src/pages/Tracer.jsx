@@ -8,7 +8,7 @@ export default function Tracer() {
   const [logs, setLogs] = useState({ today: [], yesterday: [] });
 
   useEffect(() => {
-    axios.get(`${API_URL}/tracer/logs`, {
+    axios.get(`${API_URL}/api/tracer/logs`, {
         headers: { "x-api-key": import.meta.env.VITE_API_KEY }
     })
       .then(res => setLogs(res.data))

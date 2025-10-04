@@ -17,16 +17,23 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Analytics() {
   const [stats, setStats] = useState(null);
+  const [groupBy, setGroupBy] = useState("day");
 
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/stats/analytics`, {
+  const fetchStats = async () => {
+   try {
+     const res = await axios.get(`${API_URL}/api/stats/analytics?groupBy=${groupBy}`, {
           headers: { "x-api-key": import.meta.env.VITE_API_KEY }
       })
-      .then((res) => setStats(res.data))
-      .catch((err) => console.error("Error fetching analytics:", err));
-  }, []);
+      setStats(res.data);
+    } catch (err) {
+       console.error("Error fetching analytics:", err);
+    }
+  };
 
+  useEffect(() => {
+    fetchStats();
+  }, [groupBy]);
+  
   if (!stats) return <p>No stats available</p>;
 
   // Radial data
@@ -39,9 +46,15 @@ export default function Analytics() {
     <div className="main-content">
       <h2>Analysis</h2>
 
-      {/* Cards Row */}
+      <div className="filter-bar">
+        <label>Group By: </label>
+        <select value={groupBy} onChange={(e) => setGroupBy(e.target.value)}>
+          <option value="day">Daily</option>
+          <option value="month">Monthly</option>
+        </select>
+      </div>
+      
       <div className="stats-cards">
-        {/* Uptime */}
         <div className="card">
           <h4>Uptime (Last 7 Days)</h4>
           <RadialBarChart
@@ -96,7 +109,6 @@ export default function Analytics() {
           <small>Peak latency: {stats.peakLatency} ms</small>
         </div>
 
-        {/* Request Volume */}
         <div className="card">
           <h4>Request Volume</h4>
           <RadialBarChart
@@ -120,7 +132,6 @@ export default function Analytics() {
           <p>{stats.totalRequests}</p>
         </div>
 
-        {/* Error Rate */}
         <div className="card">
           <h4>Error Rate</h4>
           <RadialBarChart
@@ -146,8 +157,7 @@ export default function Analytics() {
         </div>
       </div>
 
-      {/* 📊 Line Chart */}
-      <h3>Uptime Trend (By Month)</h3>
+      <h3>Uptime Trend ({groupBy === "month" ? "By Month" : "By Day"}))</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={stats.uptimeTrend}>
           <defs>
@@ -157,7 +167,7 @@ export default function Analytics() {
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" /> {/* ✅ Now shows Jan, Feb, Mar */}
+          <XAxis dataKey="date" />
           <YAxis domain={[90, 100]} />
           <Tooltip />
           <Line
@@ -171,7 +181,6 @@ export default function Analytics() {
           />
         </LineChart>
       </ResponsiveContainer>
-
     </div>
   );
 }

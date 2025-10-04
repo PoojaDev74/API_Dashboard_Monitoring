@@ -23,7 +23,7 @@ export const getApiStatus = async (req, res) => {
           apiName: api.apiName,
           statuses: logs.map((l) => ({
             timestamp: l.timestamp,
-            statusCode: l.statusCode,
+            statusCode: l.status,
           })),
         };
       })

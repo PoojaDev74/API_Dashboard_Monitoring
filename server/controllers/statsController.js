@@ -1,16 +1,14 @@
 import TracerLog from "../models/TracerLogModel.js";
 import moment from "moment";
 
-console.log("✅ statsController loaded");
-
 export const getAnalytics = async (req, res) => {
   try {
-    console.log("📊 getAnalytics called");
+    console.log("getAnalytics called");
     res.json({ message: "Analytics endpoint working!" });
     
     const { start, end } = req.query;
 
-    const startDate = start ? new Date(start) : moment().subtract(7, "days").toDate();
+    const startDate = start ? new Date(start) : moment().subtract(6, "months").toDate();
     const endDate = end ? new Date(end) : new Date();
 
     const logs = await TracerLog.find({
@@ -51,15 +49,18 @@ export const getAnalytics = async (req, res) => {
       .sort((a, b) => b.timestamp - a.timestamp)[0]?.timestamp || null;
 
     // Uptime trend
-    const groupedByDay = {};
+    const grouped = {};
     logs.forEach(l => {
-      const day = moment(l.timestamp).format("YYYY-MM-DD");
-      if (!groupedByDay[day]) groupedByDay[day] = { total: 0, success: 0 };
-      groupedByDay[day].total++;
-      if (l.status >= 200 && l.status < 300) groupedByDay[day].success++;
-    });
+      const key = 
+         groupBy === "month"
+            ? moment(l.timestamp).format("MMM YYYY") 
+            : moment(l.timestamp).format("YYYY-MM-DD"); 
+         if (!grouped[key]) grouped[key] = { total: 0, success: 0 };
+         grouped[key].total++;
+         if (l.status >= 200 && l.status < 300) grouped[key].success++;
+      });
 
-    const uptimeTrend = Object.entries(groupedByDay).map(([date, vals]) => ({
+    const uptimeTrend = Object.entries(grouped).map(([date, vals]) => ({
       date,
       uptime: ((vals.success / vals.total) * 100).toFixed(2),
     }));
@@ -67,7 +68,7 @@ export const getAnalytics = async (req, res) => {
     res.json({
       totalRequests,
       avgResponseTime,
-      peakLatency,   // ✅ NEW FIELD
+      peakLatency,   
       uptime,
       errorRate,
       mostCommonError,
