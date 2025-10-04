@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
-import tracerRoutes from "./routes/tracerRoutes.js";
+import logRoutes from "./routes/logRoutes.js";
 import controlRoutes from "./routes/controlRoutes.js";
 import analyticsRoutes from "./routes/analyticsRoutes.js";
 import statusRoutes from "./routes/statusRoutes.js";
