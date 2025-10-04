@@ -11,11 +11,12 @@ export default function Control({ api }) {
   const saveConfig = () => {
     fetch(`${API_URL}/controls/${api.apiName}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-api-key": import.meta.env.VITE_API_KEY },
       body: JSON.stringify(settings)
     })
       .then(res => res.json())
-      .then(() => alert("✅ Configuration saved"));
+      .then(() => alert("Configuration saved"))
+      .catch(err => console.error("Error saving config:", err));
   };
 
   return (
