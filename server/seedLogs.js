@@ -6,9 +6,6 @@ const seedLogs = async () => {
   await connectDB();
 
   try {
-    // Clear old logs
-    await TracerLog.deleteMany({});
-
     // Sample log entries
     const logs = [
       {
