@@ -21,7 +21,7 @@ export default function Analytics() {
 
   const fetchStats = async () => {
    try {
-     const res = await axios.get(`${API_URL}/api/stats/analytics?groupBy=${groupBy}`, {
+     const res = await axios.get(`${API_URL}/api/stats/analytics?groupBy=day`, {
           headers: { "x-api-key": import.meta.env.VITE_API_KEY }
       })
       setStats(res.data);
