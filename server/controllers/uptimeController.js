@@ -3,6 +3,10 @@ import TracerLog from "../models/TracerLogModel.js";
 export const getUptime = async (req, res) => {
   try {
     const { year, month } = req.query;
+      if (!year || !month) {
+      return res.status(400).json({ error: "Year and month are required" });
+    }
+    
     const start = new Date(year, month - 1, 1);
     const end = new Date(year, month, 0, 23, 59, 59);
 
@@ -29,7 +33,7 @@ export const getUptime = async (req, res) => {
       }
 
       const total = dayLogs.length;
-      const success = dayLogs.filter(l => l.statusCode >= 200 && l.statusCode < 300).length;
+      const success = dayLogs.filter(l => l.status >= 200 && l.status < 300).length;
       const uptime = ((success / total) * 100).toFixed(2);
 
       results.push({ date: `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`, uptime });
