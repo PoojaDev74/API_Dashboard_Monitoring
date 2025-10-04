@@ -6,32 +6,38 @@ const seedLogs = async () => {
   await connectDB();
 
   try {
-     // Some sample APIs & methods //
     const apis = ["/api/user", "/api/orders", "/api/products", "/api/inventory", "/api/payments"];
     const methods = ["GET", "POST", "PUT", "DELETE"];
     const statusCodes = [200, 201, 204, 400, 401, 404, 500, 503];
 
-    // Generate 20 random logs //
-    const logs = Array.from({ length: 20 }).map((_, i) => {
+    const logs = Array.from({ length: 100 }).map((_, i) => {
       const api = apis[Math.floor(Math.random() * apis.length)];
       const method = methods[Math.floor(Math.random() * methods.length)];
       const status = statusCodes[Math.floor(Math.random() * statusCodes.length)];
       const responseTime = Math.floor(Math.random() * 1000) + 100; // 100–1100ms
 
+      // Spread logs randomly across last 30 days
+      const daysAgo = Math.floor(Math.random() * 30); 
+      const timestamp = new Date();
+      timestamp.setDate(timestamp.getDate() - daysAgo);
+      timestamp.setHours(Math.floor(Math.random() * 24));
+      timestamp.setMinutes(Math.floor(Math.random() * 60));
+      timestamp.setSeconds(Math.floor(Math.random() * 60));
+
       return {
-        traceId: `trace-${Date.now()}-${i}`, // unique traceId
+        traceId: `trace-${Date.now()}-${i}`,
         method,
         apiName: api,
         status,
         responseTimeMs: responseTime,
         logs: [
           {
-            timestamp: new Date(),
+            timestamp,
             type: "info",
             message: `Incoming ${method} request to ${api}`,
           },
           {
-            timestamp: new Date(),
+            timestamp,
             type: status >= 400 ? "error" : "info",
             message:
               status >= 400
@@ -42,10 +48,9 @@ const seedLogs = async () => {
       };
     });
 
-    //  Insert without deleting old data  //
     await TracerLog.insertMany(logs);
 
-    console.log("20 random tracer logs added successfully!");
+    console.log("100 random tracer logs added across last 30 days!");
     process.exit();
   } catch (err) {
     console.error("Error seeding tracer logs:", err);
