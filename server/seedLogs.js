@@ -1,3 +1,4 @@
+// seedLogs.js
 import mongoose from "mongoose";
 import TracerLog from "./models/TracerLogModel.js";
 import connectDB from "./config/db.js";
@@ -14,19 +15,19 @@ const seedLogs = async () => {
       const api = apis[Math.floor(Math.random() * apis.length)];
       const method = methods[Math.floor(Math.random() * methods.length)];
       const status = statusCodes[Math.floor(Math.random() * statusCodes.length)];
-      const responseTime = Math.floor(Math.random() * 1000) + 100; // 100–1100ms
+      const responseTime = Math.floor(Math.random() * 1000) + 100;
 
-      const month = Math.floor(Math.random() * 12); 
-      const day = Math.floor(Math.random() * 28) + 1; 
+      const month = Math.floor(Math.random() * 12); // 0–11
+      const day = Math.floor(Math.random() * 28) + 1; // keep dates valid
       const date = new Date(2025, month, day, Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
 
       return {
         traceId: `trace-${Date.now()}-${i}`,
         method,
-        apiName: api,
+        apiName: api, // aligned with controls
         status,
         responseTimeMs: responseTime,
-        timestamp: date,  
+        timestamp: date,
         logs: [
           {
             timestamp: date,
@@ -47,7 +48,7 @@ const seedLogs = async () => {
 
     await TracerLog.insertMany(logs);
 
-    console.log("100 random tracer logs added across last 30 days!");
+    console.log("100 random tracer logs added successfully!");
     process.exit();
   } catch (err) {
     console.error("Error seeding tracer logs:", err);
