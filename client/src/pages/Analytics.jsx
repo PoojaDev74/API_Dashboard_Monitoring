@@ -25,7 +25,9 @@ export default function Analytics() {
           headers: { "x-api-key": import.meta.env.VITE_API_KEY }
       })
       setStats(res.data);
-    } catch((err) => console.error("Error fetching analytics:", err);
+    } catch (err) {
+       console.error("Error fetching analytics:", err);
+    }
   };
 
   useEffect(() => {
