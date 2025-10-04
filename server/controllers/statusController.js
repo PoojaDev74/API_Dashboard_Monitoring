@@ -7,13 +7,15 @@ export const getApiStatus = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const year = parseInt(req.query.year) || new Date().getFullYear();
 
-    const startDate = moment(`${year}-${page}-01`).startOf("month").toDate();
+    const startDate = moment(`${year}-${String(page).padStart(2, "0")}-01`)
+      .startOf("month")
+      .toDate();
     const endDate = moment(startDate).endOf("month").toDate();
 
      const apiNames = await TracerLog.distinct("apiName");
 
     const data = await Promise.all(
-      apis.map(async (apiName) => {
+      apiNames.map(async (apiName) => {
         let logs = await TracerLog.find({
           apiName,
           timestamp: { $gte: startDate, $lte: endDate },
