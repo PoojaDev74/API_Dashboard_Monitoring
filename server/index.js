@@ -14,26 +14,32 @@ const allowedOrigins = [
   "http://localhost:5174",
   "http://localhost:5175",
   "http://localhost:5000",
-  "https://app.netlify.com/projects/apistatusmonitoringdashboard"
-     
+  "http://localhost:3000"
+  "https://apistatusmonitoringdashboard.netlify.app"
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-    allowedHeaders: ["Content-Type", "x-api-key"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    preflightContinue: false,   
-    optionsSuccessStatus: 204,
-  })
-);
+function isAllowedOrigin(origin) {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  if (/^https:\/\/.*\.onrender\.com$/.test(origin)) return true;
+  return false;
+}
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (isAllowedOrigin(origin)) {
+      callback(null, true);
+    } else {
+      console.log("Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  allowedHeaders: ["Content-Type", "x-api-key"],
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 connectDB();
