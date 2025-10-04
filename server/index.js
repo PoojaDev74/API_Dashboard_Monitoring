@@ -9,22 +9,6 @@ import uptimeRoutes from "./routes/uptimeRoutes.js";
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://localhost:5175",
-  "http://localhost:5000",
-  "http://localhost:3000",
-  "https://dashboardmonitoringapi.netlify.app"
-];
-
-function isAllowedOrigin(origin) {
-  if (!origin) return true;
-  if (allowedOrigins.includes(origin)) return true;
-  if (/^https:\/\/.*\.onrender\.com$/.test(origin)) return true;
-  return false;
-}
-
 app.use(express.json());
 connectDB();
 
