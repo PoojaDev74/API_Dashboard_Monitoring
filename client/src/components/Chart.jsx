@@ -35,7 +35,7 @@ export default function Chart({ year, month }) {
       {
         label: "Uptime %",
         data: values,
-        borderColor: "#4bf9cff",
+        borderColor: "#4bc0c0",
         tension: 0.3,
         fill: true,
         backgroundColor: "rgba(79,156,255,0.3)",
