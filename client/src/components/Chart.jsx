@@ -38,17 +38,8 @@ export default function Chart({ year, month }) {
         borderColor: "#4bf9cff",
         tension: 0.3,
         fill: true,
-        backgroundColor: (ctx) => {
-          const chart = ctx.chart;
-          const { ctx: canvasCtx, chartArea } = chart;
-          if (!chartArea) return null;
-          const gradient = canvasCtx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-          gradient.addColorStop(0, "rgba(79,156,255,0.4)");
-          gradient.addColorStop(1, "rgba(79,156,255,0)");
-          return gradient;
-        },
-        pointRadius: 3,
-        pointBackgroundColor: "#4f9cff",
+        backgroundColor: "rgba(79,156,255,0.3)",
+        pointRadius: 3
       },
     ],
   };
