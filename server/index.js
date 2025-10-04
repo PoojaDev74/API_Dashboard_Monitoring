@@ -25,24 +25,31 @@ function isAllowedOrigin(origin) {
   return false;
 }
 
+app.use(express.json());
+connectDB();
+
+const allowedOrigins = [
+  "https://dashboardmonitoringapi.netlify.app",
+  "http://localhost:10000",
+  "http://localhost:5000",
+  "http://localhost:3000"
+];
+
 const corsOptions = {
   origin: function (origin, callback) {
-    if (isAllowedOrigin(origin)) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log("Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  allowedHeaders: ["Content-Type", "x-api-key"],
+  allowedHeaders: "Content-Type,Authorization",
 };
 
 app.use(cors(corsOptions));
 
-app.use(express.json());
-connectDB();
 
 // Routes
 app.use("/api/tracer", logRoutes);
