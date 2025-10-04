@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Chart from "../components/Chart"; 
+import {
+  RadialBarChart,
+  RadialBar,
+  ResponsiveContainer
+} from "recharts";
 import "../style/analytics.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -26,6 +31,11 @@ export default function Analytics() {
   
   if (!stats) return <p>Loading analytics..</p>;
 
+  const uptimeData = [{ name: "Uptime", value: Number(stats.uptime) }];
+  const avgRespData = [{ name: "Avg Resp", value: Number(stats.avgResponseTime) }];
+  const reqVolumeData = [{ name: "Requests", value: Number(stats.totalRequests) }];
+  const errorRateData = [{ name: "Errors", value: Number(stats.errorRate) }];
+  
   return (
     <div className="main-content">
       <h2>Analysis</h2>
