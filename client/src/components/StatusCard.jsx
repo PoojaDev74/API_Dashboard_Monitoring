@@ -12,7 +12,9 @@ function StatusCard({ log }) {
 
   return (
     <div className="status-card">
-       <div className={`status-card ${getStatus(status)} ${isDown ? "downtime" : ""}`}></div>
+       <div className={getStatus(status)}>
+         {isDown ? "🔴 Down" : ""}
+       </div>
     </div>
   );
 }
