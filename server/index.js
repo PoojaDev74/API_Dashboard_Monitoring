@@ -29,7 +29,7 @@ const corsOptions = {
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  allowedHeaders: "Content-Type,Authorization",
+  allowedHeaders: ["Content-Type", "x-api-key"]
 };
 
 app.use(cors(corsOptions));
