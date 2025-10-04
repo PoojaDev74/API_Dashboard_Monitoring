@@ -16,8 +16,8 @@ const seedLogs = async () => {
       const status = statusCodes[Math.floor(Math.random() * statusCodes.length)];
       const responseTime = Math.floor(Math.random() * 1000) + 100; // 100–1100ms
 
-      const month = Math.floor(Math.random() * 12); // 0–11
-      const day = Math.floor(Math.random() * 28) + 1; // avoid invalid dates
+      const month = Math.floor(Math.random() * 12); 
+      const day = Math.floor(Math.random() * 28) + 1; 
       const date = new Date(2025, month, day, Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
 
       return {
@@ -29,7 +29,7 @@ const seedLogs = async () => {
         timestamp: date,  
         logs: [
           {
-            timestamp,
+            timestamp: date,
             type: "info",
             message: `Incoming ${method} request to ${api}`,
           },
