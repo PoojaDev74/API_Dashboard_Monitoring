@@ -15,7 +15,7 @@ const allowedOrigins = [
   "http://localhost:5175",
   "http://localhost:5000",
   "http://localhost:3000",
-  "https://apidashboardmanagement.netlify.app"
+  
 ];
 
 function isAllowedOrigin(origin) {
