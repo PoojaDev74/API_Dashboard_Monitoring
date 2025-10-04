@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Chart from "./Chart"; 
+import Chart from "../components/Chart"; 
 import "../style/analytics.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -149,29 +149,10 @@ export default function Analytics() {
       </div>
 
       <h3>Uptime Trend ({groupBy === "month" ? "By Month" : "By Day"}))</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={stats.uptimeTrend}>
-          <defs>
-            <linearGradient id="colorUptime" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#4cafef" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#4cafef" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis domain={[90, 100]} />
-          <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="uptime"
-            stroke="#4cafef"
-            strokeWidth={2}
-            dot={true}
-            fillOpacity={1}
-            fill="url(#colorUptime)"
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <Chart
+        year={new Date().getFullYear()}
+        month={new Date().getMonth() + 1}
+      />
     </div>
   );
 }
