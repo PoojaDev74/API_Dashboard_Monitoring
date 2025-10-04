@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../style/Configuration.css";
+import ControlCard from "../components/ControlCard";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -23,14 +24,6 @@ export default function Configuration() {
     return isNaN(d.getTime()) ? "Invalid Date" : d.toISOString().split("T")[0];
   };
 
-  const handleToggle = (api) => {
-    if (selectedApi && selectedApi.apiName === api.apiName) {
-      setSelectedApi(null);
-    } else {
-      setSelectedApi(api);
-    }
-  };
-
   return (
        <div className="main-content">
       <h2>API List</h2>
@@ -48,58 +41,21 @@ export default function Configuration() {
               <tr key={idx}>
                 <td>{api.apiName}</td>
                 <td>{formatDate(api.startDate)}</td>
-                <td>
-                  <button
-                    className="dots-btn"
-                    onClick={() => handleToggle(api)}
-                  >
-                    ⋮
-                  </button>
-                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="3">No APIs found</td>
+              <td colSpan="2">No APIs found</td>
             </tr>
           )}
         </tbody>
       </table>
-
-      {selectedApi && (
-        <div className="controls-card">
-          <h3>Controls for {selectedApi.apiName}</h3>
-          <div className="control-item">
-            <label>API</label>
-            <input type="checkbox" />
-          </div>
-          <div className="control-item">
-            <label>Tracer</label>
-            <input type="checkbox" />
-          </div>
-          <div className="control-item">
-            <label>Limit</label>
-            <input type="checkbox" />
-          </div>
-          <div className="control-item">
-            <label>Number of Requests</label>
-            <input type="number" placeholder="0" />
-          </div>
-          <div className="control-item">
-            <label>Schedule On/Off</label>
-            <input type="checkbox" />
-          </div>
-          <div className="control-item">
-            <label>Start Time</label>
-            <input type="time" />
-          </div>
-          <div className="control-item">
-            <label>End Time</label>
-            <input type="time" />
-          </div>
-          <button className="save-btn">Save</button>
-        </div>
-      )}
+         
+      <div className="controls-section">
+        {apis.map((api, idx) => (
+          <ControlCard key={idx} api={api} />
+        ))}
+      </div>
     </div>
   );
 }
