@@ -1,7 +1,7 @@
 import React from "react";
 import "../style/StatusCard.css";
 
-function StatusCard({ log }) {
+function StatusCard({ status, isDown })  {
   const getStatus = (status) => {
     if (status >= 200 && status<300  ) return "green";
     if (status >= 300 && status < 400) return "orange"; 
