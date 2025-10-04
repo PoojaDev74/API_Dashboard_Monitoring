@@ -1,11 +1,10 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import logRoutes from "./routes/logRoutes.js";
 import controlRoutes from "./routes/controlRoutes.js";
-import analyticsRoutes from "./routes/analyticsRoutes.js";
 import statusRoutes from "./routes/statusRoutes.js";
+import statsRoutes from "./routes/statsRoutes.js";
 import uptimeRoutes from "./routes/uptimeRoutes.js";
 
 dotenv.config();
@@ -42,11 +41,11 @@ app.options("*", cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/tracer", tracerRoutes);
+app.use("/api/tracer", logRoutes);
 app.use("/api/controls", controlRoutes);
-app.use("/api/stats", analyticsRoutes);
 app.use("/api/status", statusRoutes);
 app.use("/api/uptime", uptimeRoutes);
+app.use("/api/stats", statsRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
