@@ -29,10 +29,10 @@ app.use(
     credentials: true,
     allowedHeaders: ["Content-Type", "x-api-key"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    preflightContinue: false,   
+    optionsSuccessStatus: 204,
   })
 );
-
-app.options("/*", cors());
 
 app.use(express.json());
 connectDB();
