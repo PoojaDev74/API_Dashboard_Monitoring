@@ -3,11 +3,11 @@ import connectDB from "./config/db.js";
 import Control from "./models/controlModel.js";
 
 const seedData = [
-  { apiName: "/api/social", startDate: new Date("2025-01-01"), enabled: true },
-  { apiName: "/api/link", startDate: new Date("2025-02-15"), enabled: true },
-  { apiName: "/api/data", startDate: new Date("2025-03-01"), enabled: true },
-  { apiName: "/api/weather", startDate: new Date("2025-01-20"), enabled: true },
-  { apiName: "/api/inventory", startDate: new Date("2025-04-01"), enabled: true }
+  { apiName: "/api/user", startDate: new Date("2025-01-01"), enabled: true },
+  { apiName: "/api/orders", startDate: new Date("2025-02-15"), enabled: true },
+  { apiName: "/api/products", startDate: new Date("2025-03-01"), enabled: true },
+  { apiName: "/api/inventory", startDate: new Date("2025-04-01"), enabled: true },
+  { apiName: "/api/payments", startDate: new Date("2025-05-01"), enabled: true }
 ];
 
 const seedDB = async () => {
