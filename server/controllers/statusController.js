@@ -14,16 +14,23 @@ export const getApiStatus = async (req, res) => {
 
     const data = await Promise.all(
       apis.map(async (api) => {
-        const logs = await TracerLog.find({
+        let logs = await TracerLog.find({
           apiName: api.apiName,
           timestamp: { $gte: startDate, $lte: endDate },
         }).sort({ timestamp: 1 });
 
+        if (logs.length === 0) {
+          logs = await TracerLog.find({ apiName: api.apiName })
+            .sort({ timestamp: -1 })
+            .limit(10);
+          logs = logs.reverse(); 
+        }
+
         return {
           apiName: api.apiName,
           statuses: logs.map((l) => ({
-            timestamp: l.timestamp,
-            statusCode: l.status,
+          timestamp: l.timestamp,
+          statusCode: l.status || l.statusCode,
           })),
         };
       })
