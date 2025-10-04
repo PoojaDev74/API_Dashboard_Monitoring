@@ -11,7 +11,7 @@ export const getUptime = async (req, res) => {
     const end = new Date(year, month, 0, 23, 59, 59);
 
     const logs = await TracerLog.find({
-      timestamp: { $gte: start, $lte: end }
+      "logs.timestamp": { $gte: start, $lte: end }
     });
 
     if (logs.length === 0) return res.json({ data: [] });
@@ -23,10 +23,13 @@ export const getUptime = async (req, res) => {
       const dayStart = new Date(year, month - 1, day, 0, 0, 0);
       const dayEnd = new Date(year, month - 1, day, 23, 59, 59);
 
-      const dayLogs = logs.filter(
-        (l) => l.timestamp >= dayStart && l.timestamp <= dayEnd
+     const dayLogs = logs.filter((l) =>
+        l.logs.some(
+          (logEntry) =>
+            logEntry.timestamp >= dayStart && logEntry.timestamp <= dayEnd
+        )
       );
-
+      
       if (dayLogs.length === 0) {
         results.push({ date: `${year}-${month}-${day}`, uptime: null });
         continue;
