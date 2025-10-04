@@ -3,10 +3,7 @@ import moment from "moment";
 
 export const getAnalytics = async (req, res) => {
   try {
-    console.log("getAnalytics called");
-    res.json({ message: "Analytics endpoint working!" });
-    
-    const { start, end } = req.query;
+    const { start, end, groupBy = "day" } = req.query;
 
     const startDate = start ? new Date(start) : moment().subtract(6, "months").toDate();
     const endDate = end ? new Date(end) : new Date();
